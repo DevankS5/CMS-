@@ -69,6 +69,9 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    posts: Post;
+    categories: Category;
+    tags: Tag;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +80,9 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -119,6 +125,43 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  /**
+   * Full name of the user
+   */
+  name: string;
+  /**
+   * User role and permissions
+   */
+  role: 'admin' | 'author' | 'editor';
+  /**
+   * Brief biography for author pages
+   */
+  bio?: string | null;
+  /**
+   * Profile picture
+   */
+  avatar?: (string | null) | Media;
+  /**
+   * Social media links
+   */
+  social?: {
+    /**
+     * Personal website URL
+     */
+    website?: string | null;
+    /**
+     * Twitter/X handle
+     */
+    twitter?: string | null;
+    /**
+     * LinkedIn profile URL
+     */
+    linkedin?: string | null;
+    /**
+     * GitHub profile URL
+     */
+    github?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -158,6 +201,170 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  /**
+   * The main title of your blog post
+   */
+  title: string;
+  /**
+   * URL-friendly version of the title (e.g., "my-awesome-post")
+   */
+  slug: string;
+  /**
+   * A brief summary of the post (used in previews and SEO)
+   */
+  excerpt: string;
+  /**
+   * The main content of your blog post
+   */
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Main image for the blog post
+   */
+  featuredImage?: (string | null) | Media;
+  /**
+   * The author of this post
+   */
+  author: string | User;
+  /**
+   * The main category for this post
+   */
+  category: string | Category;
+  /**
+   * Tags to help organize and find this post
+   */
+  tags?: (string | Tag)[] | null;
+  /**
+   * Current status of the post
+   */
+  status: 'draft' | 'published' | 'archived';
+  /**
+   * When this post was/will be published
+   */
+  publishedAt?: string | null;
+  /**
+   * SEO settings for this post
+   */
+  seo?: {
+    /**
+     * SEO title (if different from main title)
+     */
+    metaTitle?: string | null;
+    /**
+     * SEO description for search engines
+     */
+    metaDescription?: string | null;
+    /**
+     * Comma-separated keywords for SEO
+     */
+    keywords?: string | null;
+  };
+  /**
+   * Estimated reading time in minutes
+   */
+  readingTime?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  /**
+   * The name of the category (e.g., "Technology", "Travel")
+   */
+  name: string;
+  /**
+   * URL-friendly version of the category name
+   */
+  slug: string;
+  /**
+   * A brief description of what this category is about
+   */
+  description?: string | null;
+  /**
+   * Hex color code for category styling (e.g., #FF5733)
+   */
+  color?: string | null;
+  /**
+   * Icon name or emoji for the category
+   */
+  icon?: string | null;
+  /**
+   * SEO settings for this category
+   */
+  seo?: {
+    /**
+     * SEO title for category pages
+     */
+    metaTitle?: string | null;
+    /**
+     * SEO description for category pages
+     */
+    metaDescription?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: string;
+  /**
+   * The name of the tag (e.g., "JavaScript", "React", "Tutorial")
+   */
+  name: string;
+  /**
+   * URL-friendly version of the tag name
+   */
+  slug: string;
+  /**
+   * A brief description of what this tag represents
+   */
+  description?: string | null;
+  /**
+   * Hex color code for tag styling (e.g., #4CAF50)
+   */
+  color?: string | null;
+  /**
+   * SEO settings for this tag
+   */
+  seo?: {
+    /**
+     * SEO title for tag pages
+     */
+    metaTitle?: string | null;
+    /**
+     * SEO description for tag pages
+     */
+    metaDescription?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -170,6 +377,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: string | Tag;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -218,6 +437,18 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  bio?: T;
+  avatar?: T;
+  social?:
+    | T
+    | {
+        website?: T;
+        twitter?: T;
+        linkedin?: T;
+        github?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -252,6 +483,69 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  featuredImage?: T;
+  author?: T;
+  category?: T;
+  tags?: T;
+  status?: T;
+  publishedAt?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        keywords?: T;
+      };
+  readingTime?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  color?: T;
+  icon?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  color?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
