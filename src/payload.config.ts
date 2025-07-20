@@ -29,7 +29,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+    url: process.env.DATABASE_URI || 'mongodb+srv://devankcomputer:knLLv56kVIrDLBXO@cluster0.4s7jbrz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
   }),
   sharp,
   plugins: [

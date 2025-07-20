@@ -166,7 +166,7 @@ export const Posts: CollectionConfig = {
       hooks: {
         beforeChange: [
           ({ data }) => {
-            if (data.content) {
+            if (data && data.content) {
               // Simple calculation: ~200 words per minute
               const wordCount = JSON.stringify(data.content).split(' ').length
               return Math.ceil(wordCount / 200)
