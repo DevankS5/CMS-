@@ -21,9 +21,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    staticURL: '/media',
-    staticDir: 'media',
     mimeTypes: ['image/*'],
-    required: false, // Make file upload optional
+    required: false,
   },
 }
