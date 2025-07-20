@@ -11,6 +11,19 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'imageUrl',
+      type: 'text',
+      required: false,
+      admin: {
+        description: 'Paste a remote image URL here if not uploading a file',
+      },
+    },
   ],
-  upload: true,
+  upload: {
+    staticURL: '/media',
+    staticDir: 'media',
+    mimeTypes: ['image/*'],
+    required: false, // Make file upload optional
+  },
 }
