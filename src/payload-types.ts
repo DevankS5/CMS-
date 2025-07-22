@@ -154,7 +154,7 @@ export interface User {
      */
     twitter?: string | null;
     /**
-     * LinkedIn profile URL
+     * LinkedIn profile uoURL
      */
     linkedin?: string | null;
     /**

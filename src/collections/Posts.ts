@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import CloudinaryUpload from '../fields/CloudinaryUpload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -182,9 +181,7 @@ export const Posts: CollectionConfig = {
       label: 'Cloudinary Image',
       type: 'text',
       admin: {
-        components: {
-          Field: CloudinaryUpload,
-        },
+        description: 'Upload image to Cloudinary or paste URL here',
       },
     },
   ],

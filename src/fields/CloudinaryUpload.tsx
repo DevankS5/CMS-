@@ -1,13 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 
-interface CloudinaryUploadProps {
-  path?: string
-  value?: string
-  onChange: (value: string) => void
-}
-
-const CloudinaryUpload: React.FC<CloudinaryUploadProps> = ({ path, value, onChange }) => {
+const CloudinaryUpload = (props: any) => {
+  const { value, setValue } = props
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
 
@@ -24,8 +19,8 @@ const CloudinaryUpload: React.FC<CloudinaryUploadProps> = ({ path, value, onChan
         body: formData,
       })
       const data = await res.json()
-      if (data.secure_url) {
-        onChange(data.secure_url)
+      if (data.secure_url && setValue) {
+        setValue(data.secure_url)
       } else {
         setError('Upload failed')
       }
@@ -40,7 +35,9 @@ const CloudinaryUpload: React.FC<CloudinaryUploadProps> = ({ path, value, onChan
       <input type="file" accept="image/*" onChange={handleFileChange} disabled={uploading} />
       {uploading && <div>Uploading...</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
-      {value && <img src={value} alt="Cloudinary" style={{ maxWidth: 200, marginTop: 10 }} />}
+      {value && typeof value === 'string' && (
+        <img src={value} alt="Cloudinary" style={{ maxWidth: 200, marginTop: 10 }} />
+      )}
     </div>
   )
 }
