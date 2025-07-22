@@ -16,8 +16,8 @@ export async function GET() {
 
     // Test Cloudinary connection
     const result = await cloudinary.api.ping()
-    
-    return NextResponse.json({ 
+
+    return NextResponse.json({
       status: 'SUCCESS',
       message: 'Cloudinary API is connected and working',
       cloudinary_ping: result,
@@ -26,12 +26,12 @@ export async function GET() {
         cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'Set' : 'Not Set',
         cloudinary_api_key: process.env.CLOUDINARY_API_KEY ? 'Set' : 'Not Set',
         cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET ? 'Set' : 'Not Set',
-      }
+      },
     })
   } catch (error) {
     console.error('Cloudinary connection test failed:', error)
     return NextResponse.json(
-      { 
+      {
         status: 'ERROR',
         message: 'Cloudinary API connection failed',
         error: error instanceof Error ? error.message : 'Unknown error',
@@ -40,9 +40,9 @@ export async function GET() {
           cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'Set' : 'Not Set',
           cloudinary_api_key: process.env.CLOUDINARY_API_KEY ? 'Set' : 'Not Set',
           cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET ? 'Set' : 'Not Set',
-        }
+        },
       },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }

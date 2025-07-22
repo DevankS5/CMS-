@@ -12,26 +12,11 @@ export const Media: CollectionConfig = {
     {
       name: 'alt',
       type: 'text',
-      required: true,
+      required: false,
+      admin: {
+        description: 'Alternative text for the image',
+      },
     },
   ],
-  upload: {
-    mimeTypes: ['image/*'],
-    staticDir: 'public/media',
-    adminThumbnail: 'thumbnail',
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 300,
-        position: 'centre',
-      },
-      {
-        name: 'card',
-        width: 768,
-        height: 1024,
-        position: 'centre',
-      },
-    ],
-  },
+  upload: true,
 }

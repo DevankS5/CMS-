@@ -1,6 +1,3 @@
-'use client'
-import React from 'react'
-
 export default function UploadTest() {
   const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

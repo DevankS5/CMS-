@@ -18,16 +18,21 @@ export async function POST(request: NextRequest) {
   try {
     // Check if Cloudinary is configured
     const hasCloudinaryUrl = !!process.env.CLOUDINARY_URL
-    const hasIndividualVars = !!(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET)
-    
+    const hasIndividualVars = !!(
+      process.env.CLOUDINARY_CLOUD_NAME &&
+      process.env.CLOUDINARY_API_KEY &&
+      process.env.CLOUDINARY_API_SECRET
+    )
+
     if (!hasCloudinaryUrl && !hasIndividualVars) {
       console.error('Cloudinary not configured. Set either CLOUDINARY_URL or individual env vars.')
       return NextResponse.json(
-        { 
-          error: 'Cloudinary not configured', 
-          details: 'Set CLOUDINARY_URL or CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET'
+        {
+          error: 'Cloudinary not configured',
+          details:
+            'Set CLOUDINARY_URL or CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET',
         },
-        { status: 500 }
+        { status: 500 },
       )
     }
 
@@ -60,7 +65,7 @@ export async function POST(request: NextRequest) {
               console.log('Cloudinary upload success:', result?.secure_url)
               resolve(result)
             }
-          }
+          },
         )
         .end(buffer)
     })
@@ -69,9 +74,6 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Upload route error:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-    return NextResponse.json(
-      { error: 'Upload failed', details: errorMessage },
-      { status: 500 },
-    )
+    return NextResponse.json({ error: 'Upload failed', details: errorMessage }, { status: 500 })
   }
 }
