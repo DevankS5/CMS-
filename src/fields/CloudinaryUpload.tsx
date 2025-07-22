@@ -1,11 +1,18 @@
+'use client'
 import React, { useState } from 'react'
 
-const CloudinaryUpload = ({ path, value, onChange }) => {
+interface CloudinaryUploadProps {
+  path?: string
+  value?: string
+  onChange: (value: string) => void
+}
+
+const CloudinaryUpload: React.FC<CloudinaryUploadProps> = ({ path, value, onChange }) => {
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0]
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
     setError('')

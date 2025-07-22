@@ -9,9 +9,9 @@ cloudinary.config({
 
 export async function POST(request: NextRequest) {
   const formData = await request.formData()
-  const file = formData.get('file')
+  const file = formData.get('file') as File
 
-  if (!file) {
+  if (!file || typeof file === 'string') {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
   }
 
@@ -31,8 +31,9 @@ export async function POST(request: NextRequest) {
     })
     return NextResponse.json(result)
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json(
-      { error: 'Cloudinary upload failed', details: error.message },
+      { error: 'Cloudinary upload failed', details: errorMessage },
       { status: 500 },
     )
   }

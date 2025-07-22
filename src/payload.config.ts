@@ -12,7 +12,6 @@ import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { Categories } from './collections/Categories'
 import { Tags } from './collections/Tags'
-import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -37,21 +36,6 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    cloudStorage({
-      collections: {
-        media: {
-          adapter: 's3',
-          config: {
-            region: process.env.AWS_REGION,
-            bucket: process.env.AWS_BUCKET,
-            credentials: {
-              accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-              secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            },
-          },
-        },
-      },
-    }),
     // storage-adapter-placeholder
   ],
 })
