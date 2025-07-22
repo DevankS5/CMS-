@@ -17,6 +17,13 @@ export const Media: CollectionConfig = {
         description: 'Alternative text for the image',
       },
     },
+    {
+      name: 'url',
+      type: 'text',
+      required: false,
+      admin: {
+        description: 'Image URL (for external images)',
+      },
+    },
   ],
-  upload: true,
 }
