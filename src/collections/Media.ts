@@ -4,6 +4,9 @@ export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   fields: [
     {
@@ -11,19 +14,11 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'imageUrl',
-      type: 'text',
-      required: false,
-      admin: {
-        description: 'Paste a remote image URL here if not uploading a file',
-      },
-    },
   ],
   upload: {
     mimeTypes: ['image/*'],
-    // Use local storage for uploads
-    staticDir: '../media',
+    staticDir: 'public/media',
+    adminThumbnail: 'thumbnail',
     imageSizes: [
       {
         name: 'thumbnail',
