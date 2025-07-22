@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import CloudinaryUpload from '../fields/CloudinaryUpload'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -174,6 +175,16 @@ export const Posts: CollectionConfig = {
             return undefined
           },
         ],
+      },
+    },
+    {
+      name: 'cloudinaryImage',
+      label: 'Cloudinary Image',
+      type: 'text',
+      admin: {
+        components: {
+          Field: CloudinaryUpload,
+        },
       },
     },
   ],
