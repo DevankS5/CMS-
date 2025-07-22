@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
+  const hasCloudinaryUrl = !!process.env.CLOUDINARY_URL
+  const hasIndividualVars = !!(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET)
+  
   return NextResponse.json({ 
     message: 'Upload API is working',
     env: {
-      cloudinary_configured: !!(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY && process.env.CLOUDINARY_API_SECRET),
+      cloudinary_configured: hasCloudinaryUrl || hasIndividualVars,
+      cloudinary_url_set: hasCloudinaryUrl,
+      cloudinary_individual_vars_set: hasIndividualVars,
       cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'Set' : 'Not Set',
     }
   })
