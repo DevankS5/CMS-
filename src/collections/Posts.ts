@@ -1,5 +1,26 @@
 import type { CollectionConfig } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { 
+  lexicalEditor,
+  BlocksFeature,
+  LinkFeature,
+  UploadFeature,
+  HeadingFeature,
+  BoldFeature,
+  ItalicFeature,
+  UnderlineFeature,
+  StrikethroughFeature,
+  SubscriptFeature,
+  SuperscriptFeature,
+  InlineCodeFeature,
+  ParagraphFeature,
+  ChecklistFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
+  IndentFeature,
+  AlignFeature,
+  BlockquoteFeature,
+  HorizontalRuleFeature,
+} from '@payloadcms/richtext-lexical'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -54,9 +75,219 @@ export const Posts: CollectionConfig = {
       name: 'content',
       type: 'richText',
       required: true,
-      editor: lexicalEditor(),
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures,
+          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+          BoldFeature(),
+          ItalicFeature(),
+          UnderlineFeature(),
+          StrikethroughFeature(),
+          SubscriptFeature(),
+          SuperscriptFeature(),
+          InlineCodeFeature(),
+          ParagraphFeature(),
+          AlignFeature(),
+          IndentFeature(),
+          UnorderedListFeature(),
+          OrderedListFeature(),
+          ChecklistFeature(),
+          LinkFeature({
+            enabledCollections: ['posts', 'categories'],
+          }),
+          BlockquoteFeature(),
+          HorizontalRuleFeature(),
+          UploadFeature({
+            collections: {
+              media: {
+                fields: [
+                  {
+                    name: 'alt',
+                    type: 'text',
+                    required: true,
+                  },
+                  {
+                    name: 'caption',
+                    type: 'richText',
+                    editor: lexicalEditor({
+                      features: ({ defaultFeatures }) => [
+                        BoldFeature(),
+                        ItalicFeature(),
+                        LinkFeature(),
+                      ]
+                    })
+                  }
+                ]
+              }
+            }
+          }),
+          BlocksFeature({
+            blocks: [
+              {
+                slug: 'code',
+                fields: [
+                  {
+                    name: 'language',
+                    type: 'select',
+                    defaultValue: 'javascript',
+                    options: [
+                      { label: 'JavaScript', value: 'javascript' },
+                      { label: 'TypeScript', value: 'typescript' },
+                      { label: 'Python', value: 'python' },
+                      { label: 'Java', value: 'java' },
+                      { label: 'C#', value: 'csharp' },
+                      { label: 'C++', value: 'cpp' },
+                      { label: 'PHP', value: 'php' },
+                      { label: 'Ruby', value: 'ruby' },
+                      { label: 'Go', value: 'go' },
+                      { label: 'Rust', value: 'rust' },
+                      { label: 'HTML', value: 'html' },
+                      { label: 'CSS', value: 'css' },
+                      { label: 'SQL', value: 'sql' },
+                      { label: 'JSON', value: 'json' },
+                      { label: 'YAML', value: 'yaml' },
+                      { label: 'Markdown', value: 'markdown' },
+                      { label: 'Bash/Shell', value: 'bash' },
+                      { label: 'PowerShell', value: 'powershell' },
+                      { label: 'Docker', value: 'docker' },
+                      { label: 'Plain Text', value: 'text' },
+                    ],
+                  },
+                  {
+                    name: 'code',
+                    type: 'code',
+                    required: true,
+                  },
+                  {
+                    name: 'filename',
+                    type: 'text',
+                    admin: {
+                      description: 'Optional filename to display (e.g., "app.js")',
+                    },
+                  },
+                  {
+                    name: 'showLineNumbers',
+                    type: 'checkbox',
+                    defaultValue: true,
+                  },
+                  {
+                    name: 'highlightLines',
+                    type: 'text',
+                    admin: {
+                      description: 'Comma-separated line numbers to highlight (e.g., "1,3,5-7")',
+                    },
+                  },
+                ],
+                labels: {
+                  singular: 'Code Block',
+                  plural: 'Code Blocks',
+                },
+                interfaceName: 'CodeBlock',
+              },
+              {
+                slug: 'callout',
+                fields: [
+                  {
+                    name: 'type',
+                    type: 'select',
+                    defaultValue: 'info',
+                    options: [
+                      { label: 'Info', value: 'info' },
+                      { label: 'Warning', value: 'warning' },
+                      { label: 'Error', value: 'error' },
+                      { label: 'Success', value: 'success' },
+                      { label: 'Note', value: 'note' },
+                    ],
+                  },
+                  {
+                    name: 'title',
+                    type: 'text',
+                    admin: {
+                      description: 'Optional title for the callout',
+                    },
+                  },
+                  {
+                    name: 'content',
+                    type: 'richText',
+                    required: true,
+                    editor: lexicalEditor({
+                      features: ({ defaultFeatures }) => [
+                        BoldFeature(),
+                        ItalicFeature(),
+                        InlineCodeFeature(),
+                        LinkFeature(),
+                      ]
+                    })
+                  },
+                ],
+                labels: {
+                  singular: 'Callout',
+                  plural: 'Callouts',
+                },
+                interfaceName: 'Callout',
+              },
+              {
+                slug: 'imageGallery',
+                fields: [
+                  {
+                    name: 'images',
+                    type: 'array',
+                    required: true,
+                    minRows: 1,
+                    fields: [
+                      {
+                        name: 'image',
+                        type: 'upload',
+                        relationTo: 'media',
+                        required: true,
+                      },
+                      {
+                        name: 'alt',
+                        type: 'text',
+                        required: true,
+                      },
+                      {
+                        name: 'caption',
+                        type: 'text',
+                      },
+                    ],
+                  },
+                  {
+                    name: 'layout',
+                    type: 'select',
+                    defaultValue: 'grid',
+                    options: [
+                      { label: 'Grid', value: 'grid' },
+                      { label: 'Carousel', value: 'carousel' },
+                      { label: 'Masonry', value: 'masonry' },
+                    ],
+                  },
+                  {
+                    name: 'columns',
+                    type: 'select',
+                    defaultValue: '3',
+                    options: [
+                      { label: '2 Columns', value: '2' },
+                      { label: '3 Columns', value: '3' },
+                      { label: '4 Columns', value: '4' },
+                    ],
+                    admin: {
+                      condition: (data, siblingData) => siblingData.layout === 'grid',
+                    },
+                  },
+                ],
+                labels: {
+                  singular: 'Image Gallery',
+                  plural: 'Image Galleries',
+                },
+                interfaceName: 'ImageGallery',
+              },
+            ],
+          }),
+        ],
+      }),
       admin: {
-        description: 'The main content of your blog post',
+        description: 'The main content of your blog post with rich text features',
       },
     },
     {

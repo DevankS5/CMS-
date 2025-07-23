@@ -39,6 +39,13 @@ export default async function HomePage() {
             Go to admin panel
           </a>
           <a
+            className="demo"
+            href="/demo"
+            rel="noopener noreferrer"
+          >
+            Rich Text Demo
+          </a>
+          <a
             className="docs"
             href="https://payloadcms.com/docs"
             rel="noopener noreferrer"
