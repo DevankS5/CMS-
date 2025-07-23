@@ -1,12 +1,11 @@
-import { headers as getHeaders } from 'next/headers.js'
 import { getPayload } from 'payload'
 import React from 'react'
 import RichTextRenderer from '@/components/RichTextRenderer'
+import Link from 'next/link'
 
 import config from '@/payload.config'
 
 export default async function DemoPage() {
-  const headers = await getHeaders()
   const payloadConfig = await config
   const payload = await getPayload({ config: payloadConfig })
   
@@ -91,8 +90,8 @@ export default async function DemoPage() {
             <h3 className="text-lg font-bold text-blue-800 mb-2">🚀 How to Use</h3>
             <p className="text-blue-700">
               1. Go to the admin panel and create/edit a post<br/>
-              2. In the content editor, use the "/" command to insert blocks<br/>
-              3. Type "/" followed by "code", "callout", or "gallery" to add special content<br/>
+              2. In the content editor, use the &ldquo;/&rdquo; command to insert blocks<br/>
+              3. Type &ldquo;/&rdquo; followed by &ldquo;code&rdquo;, &ldquo;callout&rdquo;, or &ldquo;gallery&rdquo; to add special content<br/>
               4. Use the toolbar for basic formatting and image uploads
             </p>
           </div>
@@ -121,12 +120,12 @@ export default async function DemoPage() {
             <p className="text-gray-600 mb-6">
               Create your first blog post in the admin panel to see the rich text features in action!
             </p>
-            <a
+            <Link
               href="/admin"
               className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Go to Admin Panel
-            </a>
+            </Link>
           </div>
         )}
       </div>
