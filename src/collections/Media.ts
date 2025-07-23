@@ -1,40 +1,7 @@
 import type { CollectionConfig } from 'payload'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const Media: CollectionConfig = {
   slug: 'media',
-  upload: {
-    staticDir: 'media',
-    mimeTypes: ['image/*'],
-    imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 300,
-        height: 300,
-        position: 'centre',
-      },
-      {
-        name: 'card',
-        width: 640,
-        height: 480,
-        position: 'centre',
-      },
-      {
-        name: 'tablet',
-        width: 1024,
-        height: undefined,
-        position: 'centre',
-      },
-      {
-        name: 'desktop',
-        width: 1920,
-        height: undefined,
-        position: 'centre',
-      },
-    ],
-    adminThumbnail: 'thumbnail',
-    focalPoint: true,
-  },
   access: {
     read: () => true,
     create: () => true,
@@ -51,21 +18,18 @@ export const Media: CollectionConfig = {
       },
     },
     {
-      name: 'caption',
-      type: 'richText',
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => defaultFeatures,
-      }),
+      name: 'url',
+      type: 'text',
+      required: true,
       admin: {
-        description: 'Optional caption for the image',
+        description: 'Image URL (paste any image URL here, including Cloudinary URLs)',
       },
     },
     {
-      name: 'cloudinaryUrl',
+      name: 'caption',
       type: 'text',
       admin: {
-        description: 'Cloudinary URL (if uploaded to Cloudinary instead)',
-        position: 'sidebar',
+        description: 'Optional caption for the image',
       },
     },
     {

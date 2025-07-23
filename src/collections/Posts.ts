@@ -106,17 +106,6 @@ export const Posts: CollectionConfig = {
                     type: 'text',
                     required: true,
                   },
-                  {
-                    name: 'caption',
-                    type: 'richText',
-                    editor: lexicalEditor({
-                      features: ({ defaultFeatures }) => [
-                        BoldFeature(),
-                        ItalicFeature(),
-                        LinkFeature(),
-                      ]
-                    })
-                  }
                 ]
               }
             }
@@ -208,16 +197,8 @@ export const Posts: CollectionConfig = {
                   },
                   {
                     name: 'content',
-                    type: 'richText',
+                    type: 'textarea',
                     required: true,
-                    editor: lexicalEditor({
-                      features: ({ defaultFeatures }) => [
-                        BoldFeature(),
-                        ItalicFeature(),
-                        InlineCodeFeature(),
-                        LinkFeature(),
-                      ]
-                    })
                   },
                 ],
                 labels: {

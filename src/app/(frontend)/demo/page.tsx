@@ -52,9 +52,9 @@ export default async function DemoPage() {
             <div className="border rounded-lg p-6">
               <h3 className="text-xl font-bold mb-3 text-green-600">🖼️ Media Features</h3>
               <ul className="space-y-2 text-gray-700">
-                <li>• Drag & drop image upload</li>
+                <li>• Simple URL-based image management</li>
+                <li>• Paste any image URL (including Cloudinary)</li>
                 <li>• Image galleries with lightbox</li>
-                <li>• Cloudinary integration</li>
                 <li>• Multiple gallery layouts</li>
                 <li>• Image captions & alt text</li>
                 <li>• Responsive image sizing</li>
@@ -92,7 +92,8 @@ export default async function DemoPage() {
               1. Go to the admin panel and create/edit a post<br/>
               2. In the content editor, use the &ldquo;/&rdquo; command to insert blocks<br/>
               3. Type &ldquo;/&rdquo; followed by &ldquo;code&rdquo;, &ldquo;callout&rdquo;, or &ldquo;gallery&rdquo; to add special content<br/>
-              4. Use the toolbar for basic formatting and image uploads
+              4. For images: Create Media entries with any image URL (Cloudinary, etc.)<br/>
+              5. Use the toolbar for basic formatting and linking to media
             </p>
           </div>
         </div>

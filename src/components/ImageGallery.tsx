@@ -8,8 +8,6 @@ interface ImageGalleryProps {
     image: {
       url?: string
       alt?: string
-      width?: number
-      height?: number
     }
     alt?: string
     caption?: string
@@ -100,8 +98,8 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             <Image
               src={item.image.url || ''}
               alt={item.alt || item.image.alt || ''}
-              width={item.image.width || 400}
-              height={item.image.height || 300}
+              width={400}
+              height={300}
               className="w-full h-auto hover:scale-105 transition-transform duration-300"
             />
           </div>
@@ -144,8 +142,8 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
             <Image
               src={images[selectedImage].image.url || ''}
               alt={images[selectedImage].alt || images[selectedImage].image.alt || ''}
-              width={images[selectedImage].image.width || 800}
-              height={images[selectedImage].image.height || 600}
+              width={800}
+              height={600}
               className="max-w-full max-h-full object-contain"
             />
             {images[selectedImage].caption && (

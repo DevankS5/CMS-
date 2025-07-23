@@ -123,8 +123,8 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
               <Image
                 src={node.value.url}
                 alt={node.value.alt || ''}
-                width={node.value.width || 800}
-                height={node.value.height || 600}
+                width={800}
+                height={600}
                 className="rounded-lg shadow-lg"
               />
               {node.value.caption && (
