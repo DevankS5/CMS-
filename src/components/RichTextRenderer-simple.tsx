@@ -101,32 +101,14 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
 
       case 'upload':
         if (node.value && typeof node.value === 'object') {
-          // Debug logging only in development
-          if (process.env.NODE_ENV === 'development') {
-            console.log('Rendering upload node:', node.value)
-          }
-          
-          // Handle both absolute URLs and relative paths for local files
-          let imageSrc = node.value.url
-          if (imageSrc && !imageSrc.startsWith('http') && !imageSrc.startsWith('/')) {
-            imageSrc = `/${imageSrc}`
-          }
-          
           return (
             <div key={index} className="my-6">
               <Image
-                src={imageSrc}
+                src={node.value.url}
                 alt={node.value.alt || ''}
                 width={node.value.width || 800}
                 height={node.value.height || 400}
                 className="rounded-lg shadow-md"
-                onError={(e) => {
-                  if (process.env.NODE_ENV === 'development') {
-                    console.error('Image failed to load:', imageSrc, e)
-                  }
-                }}
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R7/2Q=="
               />
               {node.value.caption && (
                 <p className="text-sm text-gray-600 mt-2 text-center italic">
@@ -300,5 +282,3 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
     </div>
   )
 }
-
-export default RichTextRenderer

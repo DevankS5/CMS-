@@ -4,11 +4,23 @@ import { withPayload } from '@payloadcms/next/withPayload'
 const nextConfig = {
   // Your Next.js config here
   images: {
-    domains: ['res.cloudinary.com', 'localhost'],
+    domains: ['res.cloudinary.com', 'localhost', 'github.blog', 'bing.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.blog',
+      },
+      {
+        protocol: 'https',
+        hostname: 'bing.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.bing.com',
       },
     ],
   },

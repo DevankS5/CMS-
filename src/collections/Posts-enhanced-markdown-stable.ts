@@ -1,3 +1,20 @@
+/**
+ * BACKUP: Enhanced Markdown Features Configuration
+ * Created: July 23, 2025
+ * 
+ * This is a STABLE working configuration with enhanced markdown-like features
+ * Features included:
+ * - Text formatting: Bold, Italic, Underline, Strikethrough, Superscript, Subscript, Inline Code
+ * - Headings: H1-H6
+ * - Lists: Unordered, Ordered, Checklist
+ * - Block elements: Blockquotes, Horizontal Rules
+ * - Media: Image uploads with alt text
+ * - Links: Hyperlink support
+ * - Indentation controls
+ * 
+ * STATUS: ✅ STABLE - Use this as baseline for future development
+ */
+
 import type { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import {

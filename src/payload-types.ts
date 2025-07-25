@@ -189,11 +189,7 @@ export interface Media {
   /**
    * Alternative text for accessibility and SEO
    */
-  alt: string;
-  /**
-   * Image URL (paste any image URL here, including Cloudinary URLs)
-   */
-  url: string;
+  alt?: string | null;
   /**
    * Optional caption for the image
    */
@@ -208,6 +204,41 @@ export interface Media {
   photographer?: string | null;
   updatedAt: string;
   createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -226,9 +257,9 @@ export interface Post {
   /**
    * A brief summary of the post (used in previews and SEO)
    */
-  excerpt: string;
+  excerpt?: string | null;
   /**
-   * The main content of your blog post with rich text features
+   * The main content of your blog post with enhanced rich text features including markdown-like formatting, lists, blockquotes, and images
    */
   content: {
     root: {
@@ -246,54 +277,47 @@ export interface Post {
     [k: string]: unknown;
   };
   /**
-   * Main image for the blog post
+   * Featured image for the post (used in previews and headers)
    */
   featuredImage?: (string | null) | Media;
   /**
-   * The author of this post
+   * Author of the post
    */
   author: string | User;
   /**
-   * The main category for this post
+   * Primary category for the post
    */
-  category: string | Category;
+  category?: (string | null) | Category;
   /**
-   * Tags to help organize and find this post
+   * Tags for categorizing and searching posts
    */
   tags?: (string | Tag)[] | null;
   /**
-   * Current status of the post
+   * Publication status of the post
    */
   status: 'draft' | 'published' | 'archived';
   /**
-   * When this post was/will be published
+   * Date when the post was/will be published
    */
   publishedAt?: string | null;
-  /**
-   * SEO settings for this post
-   */
-  seo?: {
+  meta?: {
     /**
-     * SEO title (if different from main title)
+     * Custom SEO title (defaults to post title)
      */
-    metaTitle?: string | null;
+    title?: string | null;
     /**
-     * SEO description for search engines
+     * Custom SEO description (defaults to excerpt)
      */
-    metaDescription?: string | null;
+    description?: string | null;
     /**
-     * Comma-separated keywords for SEO
+     * SEO keywords (comma-separated)
      */
     keywords?: string | null;
+    /**
+     * Custom Open Graph image (defaults to featured image)
+     */
+    ogImage?: (string | null) | Media;
   };
-  /**
-   * Estimated reading time in minutes
-   */
-  readingTime?: number | null;
-  /**
-   * Upload image to Cloudinary or paste URL here
-   */
-  cloudinaryImage?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -486,12 +510,54 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  url?: T;
   caption?: T;
   tags?: T;
   photographer?: T;
   updatedAt?: T;
   createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        tablet?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -508,15 +574,14 @@ export interface PostsSelect<T extends boolean = true> {
   tags?: T;
   status?: T;
   publishedAt?: T;
-  seo?:
+  meta?:
     | T
     | {
-        metaTitle?: T;
-        metaDescription?: T;
+        title?: T;
+        description?: T;
         keywords?: T;
+        ogImage?: T;
       };
-  readingTime?: T;
-  cloudinaryImage?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -588,81 +653,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "CodeBlock".
- */
-export interface CodeBlock {
-  language?:
-    | (
-        | 'javascript'
-        | 'typescript'
-        | 'python'
-        | 'java'
-        | 'csharp'
-        | 'cpp'
-        | 'php'
-        | 'ruby'
-        | 'go'
-        | 'rust'
-        | 'html'
-        | 'css'
-        | 'sql'
-        | 'json'
-        | 'yaml'
-        | 'markdown'
-        | 'bash'
-        | 'powershell'
-        | 'docker'
-        | 'text'
-      )
-    | null;
-  code: string;
-  /**
-   * Optional filename to display (e.g., "app.js")
-   */
-  filename?: string | null;
-  showLineNumbers?: boolean | null;
-  /**
-   * Comma-separated line numbers to highlight (e.g., "1,3,5-7")
-   */
-  highlightLines?: string | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'code';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "Callout".
- */
-export interface Callout {
-  type?: ('info' | 'warning' | 'error' | 'success' | 'note') | null;
-  /**
-   * Optional title for the callout
-   */
-  title?: string | null;
-  content: string;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'callout';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ImageGallery".
- */
-export interface ImageGallery {
-  images: {
-    image: string | Media;
-    alt: string;
-    caption?: string | null;
-    id?: string | null;
-  }[];
-  layout?: ('grid' | 'carousel' | 'masonry') | null;
-  columns?: ('2' | '3' | '4') | null;
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'imageGallery';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

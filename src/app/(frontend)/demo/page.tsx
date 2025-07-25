@@ -18,6 +18,7 @@ export default async function DemoPage() {
       },
     },
     limit: 3,
+    depth: 3, // Ensure relationships are populated
     sort: '-publishedAt',
   })
 
@@ -54,6 +55,7 @@ export default async function DemoPage() {
               <ul className="space-y-2 text-gray-700">
                 <li>• Simple URL-based image management</li>
                 <li>• Paste any image URL (including Cloudinary)</li>
+                <li>• Insert images from Media library</li>
                 <li>• Image galleries with lightbox</li>
                 <li>• Multiple gallery layouts</li>
                 <li>• Image captions & alt text</li>
@@ -76,10 +78,11 @@ export default async function DemoPage() {
             <div className="border rounded-lg p-6">
               <h3 className="text-xl font-bold mb-3 text-orange-600">💡 Special Blocks</h3>
               <ul className="space-y-2 text-gray-700">
+                <li>• Media Image insertion from library</li>
                 <li>• Info, warning, error callouts</li>
                 <li>• Success & note boxes</li>
-                <li>• Custom titles</li>
-                <li>• Nested rich text content</li>
+                <li>• Custom image sizes & alignment</li>
+                <li>• Custom titles & captions</li>
                 <li>• Color-coded styling</li>
                 <li>• Icon indicators</li>
               </ul>
@@ -91,9 +94,10 @@ export default async function DemoPage() {
             <p className="text-blue-700">
               1. Go to the admin panel and create/edit a post<br/>
               2. In the content editor, use the &ldquo;/&rdquo; command to insert blocks<br/>
-              3. Type &ldquo;/&rdquo; followed by &ldquo;code&rdquo;, &ldquo;callout&rdquo;, or &ldquo;gallery&rdquo; to add special content<br/>
-              4. For images: Create Media entries with any image URL (Cloudinary, etc.)<br/>
-              5. Use the toolbar for basic formatting and linking to media
+              3. Type &ldquo;/&rdquo; followed by &ldquo;code&rdquo;, &ldquo;callout&rdquo;, &ldquo;gallery&rdquo;, or &ldquo;image&rdquo;<br/>
+              4. For Media Images: Select from existing Media library entries<br/>
+              5. For new images: Create Media entries with any image URL first<br/>
+              6. Use the toolbar for basic formatting and direct uploads
             </p>
           </div>
         </div>

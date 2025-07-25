@@ -1,24 +1,5 @@
 import type { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import {
-  BoldFeature,
-  ItalicFeature,
-  ParagraphFeature,
-  UnderlineFeature,
-  HeadingFeature,
-  LinkFeature,
-  UploadFeature,
-  UnorderedListFeature,
-  OrderedListFeature,
-  ChecklistFeature,
-  BlockquoteFeature,
-  HorizontalRuleFeature,
-  InlineCodeFeature,
-  SuperscriptFeature,
-  SubscriptFeature,
-  StrikethroughFeature,
-  IndentFeature,
-} from '@payloadcms/richtext-lexical'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -29,9 +10,6 @@ export const Posts: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: () => true,
-    update: () => true,
-    delete: () => true,
   },
   fields: [
     {
@@ -63,64 +41,13 @@ export const Posts: CollectionConfig = {
       type: 'richText',
       required: true,
       editor: lexicalEditor({
-        features: [
-          // Basic text formatting
-          ParagraphFeature(),
-          BoldFeature(),
-          ItalicFeature(),
-          UnderlineFeature(),
-          StrikethroughFeature(),
-          SuperscriptFeature(),
-          SubscriptFeature(),
-          InlineCodeFeature(),
-          
-          // Headings
-          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
-          
-          // Lists
-          UnorderedListFeature(),
-          OrderedListFeature(),
-          ChecklistFeature(),
-          
-          // Block elements
-          BlockquoteFeature(),
-          HorizontalRuleFeature(),
-          
-          // Links and media
-          LinkFeature(),
-          
-          // Image upload feature
-          UploadFeature({
-            collections: {
-              media: {
-                fields: [
-                  {
-                    name: 'alt',
-                    type: 'text',
-                    required: false,
-                    admin: {
-                      description: 'Alternative text for accessibility',
-                    },
-                  },
-                  {
-                    name: 'caption',
-                    type: 'text',
-                    required: false,
-                    admin: {
-                      description: 'Image caption',
-                    },
-                  },
-                ],
-              },
-            },
-          }),
-          
-          // Text alignment and indentation
-          IndentFeature(),
+        features: ({ defaultFeatures }) => [
+          // Use only default features to avoid blockReferences issues
+          ...defaultFeatures,
         ],
       }),
       admin: {
-        description: 'The main content of your blog post with enhanced rich text features including markdown-like formatting, lists, blockquotes, and images',
+        description: 'The main content of your blog post with basic rich text features',
       },
     },
     {

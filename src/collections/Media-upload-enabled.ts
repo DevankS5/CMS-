@@ -1,9 +1,27 @@
+/**
+ * BACKUP: Enhanced Markdown Features Configuration + UPLOAD SUPPORT
+ * Updated: July 24, 2025
+ * 
+ * This is a STABLE working configuration with enhanced markdown-like features
+ * Features included:
+ * - Text formatting: Bold, Italic, Underline, Strikethrough, Superscript, Subscript, Inline Code
+ * - Headings: H1-H6
+ * - Lists: Unordered, Ordered, Checklist
+ * - Block elements: Blockquotes, Horizontal Rules
+ * - Media: Image uploads with alt text (FIXED: Upload collections enabled)
+ * - Links: Hyperlink support
+ * - Indentation controls
+ * 
+ * STATUS: ✅ STABLE - Use this as baseline for future development
+ * UPLOAD: ✅ WORKING - Media collection properly configured as upload collection
+ */
+
 import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
-    staticDir: 'public/media',
+    staticDir: 'media',
     imageSizes: [
       {
         name: 'thumbnail',

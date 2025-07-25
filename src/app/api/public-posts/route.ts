@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const posts = await payload.find({
     collection: 'posts',
     where: { status: { equals: 'published' } },
-    depth: 2,
+    depth: 3, // Increased depth to ensure block relationships are populated
     sort: '-publishedAt',
   })
   return NextResponse.json(posts)
