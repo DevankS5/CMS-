@@ -1,0 +1,22 @@
+/* Custom admin panel styles */
+.payload-admin {
+  font-family: inherit;
+}
+
+/* Suppress hydration warnings in development */
+[data-new-gr-c-s-check-loaded],
+[data-gr-ext-installed] {
+  /* These attributes are added by Grammarly browser extension */
+  /* They don't affect functionality, just cause hydration warnings */
+  display: contents;
+}
+
+/* Global styles for better UX */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Prevent hydration issues with theme switching */
+  color-scheme: light dark;
+}

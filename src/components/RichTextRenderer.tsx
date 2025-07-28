@@ -8,10 +8,7 @@ interface RichTextRendererProps {
   className?: string
 }
 
-export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
-  content,
-  className = '',
-}) => {
+export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, className = '' }) => {
   const renderNode = (node: any, index: number): React.ReactNode => {
     if (!node) return null
 
@@ -25,9 +22,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
       case 'paragraph':
         return (
           <p key={index} className="mb-4 leading-relaxed">
-            {node.children?.map((child: any, childIndex: number) =>
-              renderNode(child, childIndex)
-            )}
+            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
           </p>
         )
 
@@ -40,47 +35,43 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
           h5: 'text-lg font-bold mb-2 mt-4',
           h6: 'text-base font-bold mb-2 mt-3',
         }
-        
+
         const HeadingTag = node.tag as keyof typeof headingClasses
         const headingClass = headingClasses[HeadingTag] || headingClasses.h1
-        
+
         return React.createElement(
           HeadingTag,
           { key: index, className: headingClass },
-          node.children?.map((child: any, childIndex: number) =>
-            renderNode(child, childIndex)
-          )
+          node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex)),
         )
 
       case 'list':
         const ListTag = node.listType === 'number' ? 'ol' : 'ul'
-        const listClass = node.listType === 'number' 
-          ? 'list-decimal list-inside mb-4 space-y-1'
-          : 'list-disc list-inside mb-4 space-y-1'
-        
+        const listClass =
+          node.listType === 'number'
+            ? 'list-decimal list-inside mb-4 space-y-1'
+            : 'list-disc list-inside mb-4 space-y-1'
+
         return (
           <ListTag key={index} className={listClass}>
-            {node.children?.map((child: any, childIndex: number) =>
-              renderNode(child, childIndex)
-            )}
+            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
           </ListTag>
         )
 
       case 'listitem':
         return (
           <li key={index} className="mb-1">
-            {node.children?.map((child: any, childIndex: number) =>
-              renderNode(child, childIndex)
-            )}
+            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
           </li>
         )
 
       case 'quote':
         return (
-          <blockquote key={index} className="border-l-4 border-blue-500 pl-4 my-6 italic text-gray-700">
-            {node.children?.map((child: any, childIndex: number) =>
-              renderNode(child, childIndex)
-            )}
+          <blockquote
+            key={index}
+            className="border-l-4 border-blue-500 pl-4 my-6 italic text-gray-700"
+          >
+            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
           </blockquote>
         )
 
@@ -93,9 +84,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
             target={node.newTab ? '_blank' : undefined}
             rel={node.newTab ? 'noopener noreferrer' : undefined}
           >
-            {node.children?.map((child: any, childIndex: number) =>
-              renderNode(child, childIndex)
-            )}
+            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
           </a>
         )
 
@@ -105,13 +94,13 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
           if (process.env.NODE_ENV === 'development') {
             console.log('Rendering upload node:', node.value)
           }
-          
+
           // Handle both absolute URLs and relative paths for local files
           let imageSrc = node.value.url
           if (imageSrc && !imageSrc.startsWith('http') && !imageSrc.startsWith('/')) {
             imageSrc = `/${imageSrc}`
           }
-          
+
           return (
             <div key={index} className="my-6">
               <Image
@@ -156,11 +145,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
             text = <u>{text}</u>
           }
           if (node.code) {
-            text = (
-              <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">
-                {text}
-              </code>
-            )
+            text = <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">{text}</code>
           }
 
           return text
@@ -169,7 +154,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
         // Recursively render children for unknown types
         if (node.children) {
           return node.children.map((child: any, childIndex: number) =>
-            renderNode(child, childIndex)
+            renderNode(child, childIndex),
           )
         }
 
@@ -194,9 +179,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
                 </div>
               )}
               <pre className="p-4 overflow-x-auto">
-                <code className="font-mono text-sm">
-                  {block.code}
-                </code>
+                <code className="font-mono text-sm">{block.code}</code>
               </pre>
             </div>
           </div>
@@ -207,13 +190,15 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
           <div key={index} className="my-6">
             {block.image && typeof block.image === 'object' && (
               <>
-                <div className={`
+                <div
+                  className={`
                   ${block.size === 'small' ? 'max-w-sm' : ''}
                   ${block.size === 'medium' ? 'max-w-md' : ''}
                   ${block.size === 'large' ? 'max-w-2xl' : ''}
                   ${block.size === 'full' ? 'w-full' : ''}
                   mx-auto
-                `}>
+                `}
+                >
                   <Image
                     src={block.image.url}
                     alt={block.image.alt || block.caption || ''}
@@ -222,9 +207,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
                     className="rounded-lg shadow-md w-full h-auto"
                   />
                   {block.caption && (
-                    <p className="text-sm text-gray-600 mt-2 text-center italic">
-                      {block.caption}
-                    </p>
+                    <p className="text-sm text-gray-600 mt-2 text-center italic">{block.caption}</p>
                   )}
                 </div>
               </>
@@ -236,21 +219,11 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
         return (
           <div key={index} className="my-8">
             <blockquote className="border-l-4 border-blue-500 bg-blue-50 p-6 rounded-r-lg">
-              <p className="text-lg italic text-gray-800 mb-4">
-                "{block.text}"
-              </p>
+              <p className="text-lg italic text-gray-800 mb-4">"{block.text}"</p>
               {(block.author || block.role) && (
                 <footer className="text-sm text-gray-600">
-                  {block.author && (
-                    <cite className="font-semibold not-italic">
-                      {block.author}
-                    </cite>
-                  )}
-                  {block.role && (
-                    <span className="ml-2 text-gray-500">
-                      {block.role}
-                    </span>
-                  )}
+                  {block.author && <cite className="font-semibold not-italic">{block.author}</cite>}
+                  {block.role && <span className="ml-2 text-gray-500">{block.role}</span>}
                 </footer>
               )}
             </blockquote>
@@ -275,9 +248,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({
       }
 
       if (content.root && content.root.children) {
-        return content.root.children.map((child: any, index: number) =>
-          renderNode(child, index)
-        )
+        return content.root.children.map((child: any, index: number) => renderNode(child, index))
       }
 
       return renderNode(content, 0)

@@ -22,11 +22,11 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
   // Parse highlighted lines
   const getHighlightedLines = (highlightLines?: string): number[] => {
     if (!highlightLines) return []
-    
+
     const lines: number[] = []
     const parts = highlightLines.split(',')
-    
-    parts.forEach(part => {
+
+    parts.forEach((part) => {
       const trimmed = part.trim()
       if (trimmed.includes('-')) {
         const [start, end] = trimmed.split('-').map(Number)
@@ -37,7 +37,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         lines.push(Number(trimmed))
       }
     })
-    
+
     return lines
   }
 

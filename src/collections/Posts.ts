@@ -73,22 +73,22 @@ export const Posts: CollectionConfig = {
           SuperscriptFeature(),
           SubscriptFeature(),
           InlineCodeFeature(),
-          
+
           // Headings
           HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
-          
+
           // Lists
           UnorderedListFeature(),
           OrderedListFeature(),
           ChecklistFeature(),
-          
+
           // Block elements
           BlockquoteFeature(),
           HorizontalRuleFeature(),
-          
+
           // Links and media
           LinkFeature(),
-          
+
           // Image upload feature
           UploadFeature({
             collections: {
@@ -114,13 +114,14 @@ export const Posts: CollectionConfig = {
               },
             },
           }),
-          
+
           // Text alignment and indentation
           IndentFeature(),
         ],
       }),
       admin: {
-        description: 'The main content of your blog post with enhanced rich text features including markdown-like formatting, lists, blockquotes, and images',
+        description:
+          'The main content of your blog post with enhanced rich text features including markdown-like formatting, lists, blockquotes, and images',
       },
     },
     {

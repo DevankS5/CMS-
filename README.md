@@ -1,67 +1,194 @@
-# Payload Blank Template
+# Payload CMS Blog Template
 
-This template comes configured with the bare minimum to get started on anything you need.
+A modern, headless CMS blog built with Payload CMS 3.0, Next.js 15, and TypeScript. Features rich text editing with Notion-style inline code, flexible image rendering, and markdown shortcuts.
 
-## Quick start
+## ✨ Features
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+- **Payload CMS v3** - Modern headless CMS with admin panel
+- **Next.js 15** - React framework with App Router
+- **Rich Text Editor** - Lexical editor with markdown shortcuts and inline code styling
+- **Flexible Image Rendering** - Support for external images from Pexels, Unsplash, etc.
+- **Media Management** - Cloudinary integration for uploads
+- **TypeScript** - Full type safety throughout
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **SEO Optimized** - Meta tags and structured data
+- **Docker Support** - Container-ready setup
 
-## Quick Start - local setup
+## 🚀 Quick Start
 
-To spin up this template locally, follow these steps:
+### Prerequisites
 
-### Clone
+- Node.js 18+ 
+- pnpm (recommended) or npm
+- MongoDB database
+- Cloudinary account (optional, for media uploads)
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+### Installation
 
-### Development
+1. **Clone the repository**
+   ```bash
+   git clone <your-repository-url>
+   cd payload-blog-cms
+   ```
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URI` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+2. **Install dependencies**
+   ```bash
+   pnpm install
+   ```
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+3. **Setup environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Update the `.env` file with your values:
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/payload-blog
+   PAYLOAD_SECRET=your-secret-key
+   NEXT_PUBLIC_SERVER_URL=http://localhost:3000
+   
+   # Optional: Cloudinary (for media uploads)
+   CLOUDINARY_CLOUD_NAME=your-cloud-name
+   CLOUDINARY_API_KEY=your-api-key
+   CLOUDINARY_API_SECRET=your-api-secret
+   ```
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+4. **Start development server**
+   ```bash
+   pnpm dev
+   ```
 
-#### Docker (Optional)
+5. **Access the application**
+   - Frontend: [http://localhost:3000](http://localhost:3000)
+   - Admin Panel: [http://localhost:3000/admin](http://localhost:3000/admin)
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+## 🐳 Docker Setup
 
-To do so, follow these steps:
+Run with Docker for a consistent development environment:
 
-- Modify the `MONGODB_URI` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URI` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+```bash
+# Start MongoDB and the app
+docker-compose up -d
 
-## How it works
+# View logs
+docker-compose logs -f app
+```
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+## 📁 Project Structure
 
-### Collections
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── (frontend)/        # Public frontend pages
+│   ├── (payload)/         # Payload admin routes
+│   └── api/               # API endpoints
+├── collections/           # Payload collections
+│   ├── Posts.ts          # Blog posts
+│   ├── Categories.ts     # Post categories
+│   ├── Tags.ts           # Post tags
+│   ├── Media.ts          # Media/images
+│   └── Users.ts          # Admin users
+├── components/            # React components
+└── payload.config.ts     # Payload configuration
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+```
 
-- #### Users (Authentication)
+## 📝 Content Management
 
-  Users are auth-enabled collections that have access to the admin panel.
+### Creating Posts
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+1. Go to `/admin` and login
+2. Navigate to **Posts** → **Create New**
+3. Use the rich text editor with markdown shortcuts:
+   - `**bold**` + space → **bold text**
+   - `*italic*` + space → *italic text*
+   - `# heading` + space → heading
+   - `- item` + space → bullet list
 
-- #### Media
+### Managing Media
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+- Upload images through the Media collection
+- Cloudinary integration provides automatic optimization
+- Images are responsive and lazy-loaded on the frontend
 
-### Docker
+## ⚙️ Configuration
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+### Environment Variables
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `MONGODB_URI` | MongoDB connection string | Yes |
+| `PAYLOAD_SECRET` | Secret key for Payload | Yes |
+| `NEXT_PUBLIC_SERVER_URL` | Public URL of your app | Yes |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name | No |
+| `CLOUDINARY_API_KEY` | Cloudinary API key | No |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret | No |
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+### Database Setup
 
-## Questions
+**Local MongoDB:**
+```bash
+# Install MongoDB locally or use Docker
+docker run -d -p 27017:27017 --name mongodb mongo:latest
+```
 
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+**MongoDB Atlas:**
+1. Create account at [MongoDB Atlas](https://cloud.mongodb.com)
+2. Create cluster and get connection string
+3. Add to `MONGODB_URI` in `.env`
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push code to GitHub
+2. Connect to Vercel
+3. Add environment variables
+4. Deploy automatically
+
+### Docker Production
+
+```bash
+# Build production image
+docker build -t payload-blog .
+
+# Run production container
+docker run -p 3000:3000 --env-file .env payload-blog
+```
+
+## 🛠️ Development
+
+### Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+pnpm type-check   # Run TypeScript checks
+```
+
+### Adding Features
+
+- **New Collections**: Add to `src/collections/`
+- **Custom Components**: Add to `src/components/`
+- **API Routes**: Add to `src/app/api/`
+- **Frontend Pages**: Add to `src/app/(frontend)/`
+
+## 📖 Documentation
+
+- [Payload CMS Docs](https://payloadcms.com/docs)
+- [Next.js Docs](https://nextjs.org/docs)
+- [Lexical Editor](https://lexical.dev/)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -m 'Add feature'`
+4. Push branch: `git push origin feature-name`
+5. Submit pull request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).

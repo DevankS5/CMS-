@@ -67,7 +67,7 @@ export const CalloutBlock: React.FC<CalloutBlockProps> = ({
         iconBg: 'bg-orange-100 dark:bg-orange-800',
       },
     }
-    
+
     return configs[type] || configs.info
   }
 
@@ -77,20 +77,16 @@ export const CalloutBlock: React.FC<CalloutBlockProps> = ({
     <div className={`my-6 p-4 rounded-lg border ${config.bgColor} ${config.borderColor}`}>
       <div className="flex items-start space-x-3">
         {/* Icon */}
-        <div className={`flex-shrink-0 w-8 h-8 rounded-full ${config.iconBg} flex items-center justify-center text-sm`}>
+        <div
+          className={`flex-shrink-0 w-8 h-8 rounded-full ${config.iconBg} flex items-center justify-center text-sm`}
+        >
           {config.icon}
         </div>
-        
+
         {/* Content */}
         <div className={`flex-1 ${config.textColor}`}>
-          {title && (
-            <h4 className="font-semibold text-base mb-2">
-              {title}
-            </h4>
-          )}
-          <div className="text-sm leading-relaxed whitespace-pre-wrap">
-            {content}
-          </div>
+          {title && <h4 className="font-semibold text-base mb-2">{title}</h4>}
+          <div className="text-sm leading-relaxed whitespace-pre-wrap">{content}</div>
         </div>
       </div>
     </div>

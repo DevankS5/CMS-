@@ -4,12 +4,21 @@ import { getPayload } from 'payload'
 import React from 'react'
 import { fileURLToPath } from 'url'
 
-import config from '@/payload.config'
 import './styles.css'
 
 export default async function HomePage() {
   const headers = await getHeaders()
-  const payloadConfig = await config
+
+  // Dynamically import the config
+  const configModule = await import('@/payload.config')
+  const configPromise = configModule.default
+
+  // Resolve the config if it's a promise
+  const payloadConfig =
+    typeof configPromise === 'object' && 'then' in configPromise
+      ? await configPromise
+      : configPromise
+
   const payload = await getPayload({ config: payloadConfig })
   const { user } = await payload.auth({ headers })
 
@@ -30,19 +39,10 @@ export default async function HomePage() {
         {!user && <h1>Welcome to your new project.</h1>}
         {user && <h1>Welcome back, {user.email}</h1>}
         <div className="links">
-          <a
-            className="admin"
-            href={payloadConfig.routes.admin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
+          <a className="admin" href="/admin" rel="noopener noreferrer" target="_blank">
             Go to admin panel
           </a>
-          <a
-            className="demo"
-            href="/demo"
-            rel="noopener noreferrer"
-          >
+          <a className="demo" href="/demo" rel="noopener noreferrer">
             Rich Text Demo
           </a>
           <a

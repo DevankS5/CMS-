@@ -37,11 +37,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
   const renderGridLayout = () => (
     <div className={`grid gap-4 ${getGridClasses()}`}>
       {images.map((item, index) => (
-        <div
-          key={index}
-          className="group cursor-pointer"
-          onClick={() => setSelectedImage(index)}
-        >
+        <div key={index} className="group cursor-pointer" onClick={() => setSelectedImage(index)}>
           <div className="relative overflow-hidden rounded-lg aspect-square">
             <Image
               src={item.image.url || ''}
@@ -50,9 +46,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
               className="object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </div>
-          {item.caption && (
-            <p className="mt-2 text-sm text-gray-600">{item.caption}</p>
-          )}
+          {item.caption && <p className="mt-2 text-sm text-gray-600">{item.caption}</p>}
         </div>
       ))}
     </div>
@@ -76,9 +70,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
                   className="object-cover"
                 />
               </div>
-              {item.caption && (
-                <p className="mt-2 text-sm text-gray-600">{item.caption}</p>
-              )}
+              {item.caption && <p className="mt-2 text-sm text-gray-600">{item.caption}</p>}
             </div>
           ))}
         </div>
@@ -103,9 +95,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
               className="w-full h-auto hover:scale-105 transition-transform duration-300"
             />
           </div>
-          {item.caption && (
-            <p className="mt-2 text-sm text-gray-600">{item.caption}</p>
-          )}
+          {item.caption && <p className="mt-2 text-sm text-gray-600">{item.caption}</p>}
         </div>
       ))}
     </div>
@@ -147,9 +137,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = ({
               className="max-w-full max-h-full object-contain"
             />
             {images[selectedImage].caption && (
-              <p className="text-white text-center mt-4">
-                {images[selectedImage].caption}
-              </p>
+              <p className="text-white text-center mt-4">{images[selectedImage].caption}</p>
             )}
           </div>
         </div>

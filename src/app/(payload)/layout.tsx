@@ -24,11 +24,7 @@ const serverFunction: ServerFunctionClient = async function (args) {
 
 const Layout = ({ children }: Args) => (
   <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
-    <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
-        <main>{children}</main>
-      </body>
-    </html>
+    {children}
   </RootLayout>
 )
 

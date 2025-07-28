@@ -43,11 +43,7 @@ const getCalloutStyles = (type: string) => {
   }
 }
 
-export const Callout: React.FC<CalloutProps> = ({
-  type = 'info',
-  title,
-  content,
-}) => {
+export const Callout: React.FC<CalloutProps> = ({ type = 'info', title, content }) => {
   const styles = getCalloutStyles(type)
 
   return (
@@ -57,11 +53,7 @@ export const Callout: React.FC<CalloutProps> = ({
           <span className="text-lg">{styles.icon}</span>
         </div>
         <div className="flex-1">
-          {title && (
-            <h4 className={`font-semibold mb-1 ${styles.titleColor}`}>
-              {title}
-            </h4>
-          )}
+          {title && <h4 className={`font-semibold mb-1 ${styles.titleColor}`}>{title}</h4>}
           <div className="callout-content">
             {/* This would typically render the rich text content */}
             {typeof content === 'string' ? (

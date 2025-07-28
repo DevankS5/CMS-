@@ -8,19 +8,15 @@ interface QuoteBlockProps {
   author?: string
   role?: string
   company?: string
-  avatar?: {
-    url: string
-    alt?: string
-  } | string
+  avatar?:
+    | {
+        url: string
+        alt?: string
+      }
+    | string
 }
 
-export const QuoteBlock: React.FC<QuoteBlockProps> = ({
-  quote,
-  author,
-  role,
-  company,
-  avatar,
-}) => {
+export const QuoteBlock: React.FC<QuoteBlockProps> = ({ quote, author, role, company, avatar }) => {
   const avatarData = typeof avatar === 'string' ? null : avatar
 
   return (
@@ -31,12 +27,12 @@ export const QuoteBlock: React.FC<QuoteBlockProps> = ({
           <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
         </svg>
       </div>
-      
+
       {/* Quote text */}
       <blockquote className="text-lg font-medium text-gray-900 dark:text-gray-100 leading-relaxed mb-6">
         &ldquo;{quote}&rdquo;
       </blockquote>
-      
+
       {/* Author info */}
       {(author || role || company) && (
         <div className="flex items-center space-x-4">
@@ -52,17 +48,17 @@ export const QuoteBlock: React.FC<QuoteBlockProps> = ({
               />
             </div>
           )}
-          
+
           {/* Author details */}
           <div>
             {author && (
-              <div className="font-semibold text-gray-900 dark:text-gray-100">
-                {author}
-              </div>
+              <div className="font-semibold text-gray-900 dark:text-gray-100">{author}</div>
             )}
             {(role || company) && (
               <div className="text-sm text-gray-600 dark:text-gray-400">
-                {role}{role && company && ', '}{company}
+                {role}
+                {role && company && ', '}
+                {company}
               </div>
             )}
           </div>

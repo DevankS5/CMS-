@@ -78,7 +78,9 @@ export const MediaImageBlock: React.FC<MediaImageBlockProps> = ({
 
   return (
     <figure className={`my-8 ${getSizeClasses()} ${getAlignmentClasses()}`}>
-      <div className={`relative overflow-hidden ${rounded ? 'rounded-xl' : ''} ${shadow ? 'shadow-lg hover:shadow-xl' : ''} transition-shadow duration-300`}>
+      <div
+        className={`relative overflow-hidden ${rounded ? 'rounded-xl' : ''} ${shadow ? 'shadow-lg hover:shadow-xl' : ''} transition-shadow duration-300`}
+      >
         <Image
           src={media.url}
           alt={media.alt || ''}
@@ -88,10 +90,17 @@ export const MediaImageBlock: React.FC<MediaImageBlockProps> = ({
           sizes={`
             (max-width: 640px) 100vw,
             (max-width: 768px) 80vw,
-            ${size === 'small' ? '384px' : 
-              size === 'medium' ? '672px' : 
-              size === 'large' ? '896px' : 
-              size === 'xl' ? '1024px' : '100vw'}
+            ${
+              size === 'small'
+                ? '384px'
+                : size === 'medium'
+                  ? '672px'
+                  : size === 'large'
+                    ? '896px'
+                    : size === 'xl'
+                      ? '1024px'
+                      : '100vw'
+            }
           `}
         />
       </div>
