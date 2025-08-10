@@ -219,7 +219,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
         return (
           <div key={index} className="my-8">
             <blockquote className="border-l-4 border-blue-500 bg-blue-50 p-6 rounded-r-lg">
-              <p className="text-lg italic text-gray-800 mb-4">"{block.text}"</p>
+              <p className="text-lg italic text-gray-800 mb-4">&ldquo;{block.text}&rdquo;</p>
               {(block.author || block.role) && (
                 <footer className="text-sm text-gray-600">
                   {block.author && <cite className="font-semibold not-italic">{block.author}</cite>}

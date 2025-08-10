@@ -2,8 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '../../../../../payload.config'
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  const { slug } = await params
+function extractSlug(request: NextRequest): string | null {
+  try {
+    return request.nextUrl.pathname.split('/').pop() || null
+  } catch {
+    return null
+  }
+}
+
+export async function GET(request: NextRequest) {
+  const slug = extractSlug(request)
+  if (!slug) return NextResponse.json({ error: 'Invalid slug' }, { status: 400 })
   const payload = await getPayload({ config })
 
   try {
@@ -20,20 +29,22 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
 
     // Manually populate media relationships in content blocks if needed
     const postData = post.docs[0]
-    if (postData.content && postData.content.root && postData.content.root.children) {
-      for (const child of postData.content.root.children) {
-        if (
-          child.type === 'block' &&
-          child.fields?.blockType === 'mediaImage' &&
-          child.fields?.media
-        ) {
-          if (typeof child.fields.media === 'string') {
-            // Fetch the media object
-            const mediaResult = await payload.findByID({
-              collection: 'media',
-              id: child.fields.media,
-            })
-            child.fields.media = mediaResult
+    if (postData.content?.root?.children) {
+      for (const child of postData.content.root.children as any[]) {
+        if (child && child.type === 'block' && child.fields) {
+          const fields = child.fields as { blockType?: string; media?: any }
+          if (fields.blockType === 'mediaImage' && fields.media) {
+            if (typeof fields.media === 'string') {
+              try {
+                const mediaResult = await payload.findByID({
+                  collection: 'media',
+                  id: fields.media,
+                })
+                fields.media = mediaResult
+              } catch (e) {
+                console.warn('Failed to populate media block', e)
+              }
+            }
           }
         }
       }

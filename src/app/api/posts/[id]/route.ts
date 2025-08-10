@@ -2,8 +2,19 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '../../../../payload.config'
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = await params
+function extractID(request: NextRequest): string | null {
+  try {
+    const url = new URL(request.url)
+    const segments = url.pathname.split('/')
+    return segments.pop() || null
+  } catch {
+    return null
+  }
+}
+
+export async function GET(request: NextRequest) {
+  const id = extractID(request)
+  if (!id) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
   const payload = await getPayload({ config })
 
   try {
@@ -27,8 +38,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = await params
+export async function PATCH(request: NextRequest) {
+  const id = extractID(request)
+  if (!id) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
   const payload = await getPayload({ config })
 
   try {
@@ -52,8 +64,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  const { id } = await params
+export async function DELETE(request: NextRequest) {
+  const id = extractID(request)
+  if (!id) return NextResponse.json({ error: 'Invalid ID' }, { status: 400 })
   const payload = await getPayload({ config })
 
   try {
