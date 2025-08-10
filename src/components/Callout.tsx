@@ -5,7 +5,7 @@ import React from 'react'
 interface CalloutProps {
   type?: 'info' | 'warning' | 'error' | 'success' | 'note'
   title?: string
-  content: any // Rich text content
+  content: string | Record<string, unknown> // Rich text content
 }
 
 const getCalloutStyles = (type: string) => {

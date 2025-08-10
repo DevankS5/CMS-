@@ -3,13 +3,49 @@
 import React from 'react'
 import Image from 'next/image'
 
+interface ImageValue {
+  url: string
+  alt?: string
+  width?: number
+  height?: number
+  caption?: string
+}
+
+interface RichTextNode {
+  type?: string
+  text?: string
+  children?: RichTextNode[]
+  tag?: string
+  listType?: string
+  url?: string
+  newTab?: boolean
+  value?: ImageValue
+  blockType?: string
+  bold?: boolean
+  italic?: boolean
+  underline?: boolean
+  code?: boolean | string
+  language?: string
+  size?: string
+  image?: ImageValue
+  caption?: string
+  author?: string
+  role?: string
+}
+
+interface RichTextContent {
+  root?: {
+    children: RichTextNode[]
+  }
+}
+
 interface RichTextRendererProps {
-  content: any
+  content: RichTextNode[] | RichTextContent | RichTextNode | string
   className?: string
 }
 
 export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, className = '' }) => {
-  const renderNode = (node: any, index: number): React.ReactNode => {
+  const renderNode = (node: RichTextNode | string, index: number): React.ReactNode => {
     if (!node) return null
 
     // Handle text nodes
@@ -22,7 +58,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
       case 'paragraph':
         return (
           <p key={index} className="mb-4 leading-relaxed">
-            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
           </p>
         )
 
@@ -42,7 +78,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
         return React.createElement(
           HeadingTag,
           { key: index, className: headingClass },
-          node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex)),
+          node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex)),
         )
 
       case 'list':
@@ -54,14 +90,14 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
 
         return (
           <ListTag key={index} className={listClass}>
-            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
           </ListTag>
         )
 
       case 'listitem':
         return (
           <li key={index} className="mb-1">
-            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
           </li>
         )
 
@@ -71,7 +107,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
             key={index}
             className="border-l-4 border-blue-500 pl-4 my-6 italic text-gray-700"
           >
-            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
           </blockquote>
         )
 
@@ -79,12 +115,12 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
         return (
           <a
             key={index}
-            href={node.url}
+            href={node.url || '#'}
             className="text-blue-600 hover:text-blue-800 underline"
             target={node.newTab ? '_blank' : undefined}
             rel={node.newTab ? 'noopener noreferrer' : undefined}
           >
-            {node.children?.map((child: any, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
           </a>
         )
 
@@ -96,7 +132,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
           }
 
           // Handle both absolute URLs and relative paths for local files
-          let imageSrc = node.value.url
+          let imageSrc = node.value.url || ''
           if (imageSrc && !imageSrc.startsWith('http') && !imageSrc.startsWith('/')) {
             imageSrc = `/${imageSrc}`
           }
@@ -153,7 +189,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
 
         // Recursively render children for unknown types
         if (node.children) {
-          return node.children.map((child: any, childIndex: number) =>
+          return node.children.map((child: RichTextNode, childIndex: number) =>
             renderNode(child, childIndex),
           )
         }
@@ -162,7 +198,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
     }
   }
 
-  const renderBlock = (block: any, index: number): React.ReactNode => {
+  const renderBlock = (block: RichTextNode, index: number): React.ReactNode => {
     if (!block || !block.blockType) {
       console.warn('RichTextRenderer: Invalid block:', block)
       return null
@@ -179,7 +215,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
                 </div>
               )}
               <pre className="p-4 overflow-x-auto">
-                <code className="font-mono text-sm">{block.code}</code>
+                <code className="font-mono text-sm">{typeof block.code === 'string' ? block.code : ''}</code>
               </pre>
             </div>
           </div>
@@ -200,7 +236,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
                 `}
                 >
                   <Image
-                    src={block.image.url}
+                    src={block.image.url || ''}
                     alt={block.image.alt || block.caption || ''}
                     width={block.image.width || 800}
                     height={block.image.height || 400}
@@ -219,7 +255,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
         return (
           <div key={index} className="my-8">
             <blockquote className="border-l-4 border-blue-500 bg-blue-50 p-6 rounded-r-lg">
-              <p className="text-lg italic text-gray-800 mb-4">"{block.text}"</p>
+              <p className="text-lg italic text-gray-800 mb-4">&quot;{block.text || ''}&quot;</p>
               {(block.author || block.role) && (
                 <footer className="text-sm text-gray-600">
                   {block.author && <cite className="font-semibold not-italic">{block.author}</cite>}
@@ -236,7 +272,7 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
     }
   }
 
-  const renderContent = (content: any): React.ReactNode => {
+  const renderContent = (content: RichTextNode[] | RichTextContent | RichTextNode | string): React.ReactNode => {
     if (!content) {
       console.warn('RichTextRenderer: No content provided')
       return null
@@ -247,11 +283,15 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
         return content.map((item, index) => renderNode(item, index))
       }
 
-      if (content.root && content.root.children) {
-        return content.root.children.map((child: any, index: number) => renderNode(child, index))
+      if (typeof content === 'object' && 'root' in content && content.root && content.root.children) {
+        return content.root.children.map((child: RichTextNode, index: number) => renderNode(child, index))
       }
 
-      return renderNode(content, 0)
+      if (typeof content === 'string' || (typeof content === 'object' && !('root' in content))) {
+        return renderNode(content as RichTextNode | string, 0)
+      }
+
+      return null
     } catch (error) {
       console.error('RichTextRenderer: Error rendering content:', error, content)
       return (

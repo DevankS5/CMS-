@@ -223,7 +223,7 @@ export const Posts: CollectionConfig = {
   ],
   hooks: {
     beforeChange: [
-      ({ req, operation, data }) => {
+      ({ operation, data }) => {
         // Auto-generate slug from title if not provided
         if (operation === 'create' && data.title && !data.slug) {
           data.slug = data.title

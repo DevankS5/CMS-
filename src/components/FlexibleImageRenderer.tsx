@@ -30,13 +30,13 @@ export const FlexibleImageRenderer: React.FC<FlexibleImageRendererProps> = ({
   if (isExternal && hasDomainIssues) {
     return (
       <div className={`my-6 ${className}`}>
-        <img
+        <Image
           src={src}
           alt={alt}
           width={width}
           height={height}
           className="rounded-lg shadow-md max-w-full h-auto"
-          loading="lazy"
+          unoptimized={true}
           onError={(e) => {
             console.error('Image failed to load:', src)
             const target = e.target as HTMLImageElement

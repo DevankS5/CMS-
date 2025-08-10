@@ -1,7 +1,13 @@
 'use client'
 import React, { useState } from 'react'
+import Image from 'next/image'
 
-const CloudinaryUpload = (props: any) => {
+interface CloudinaryUploadProps {
+  value?: string
+  setValue?: (value: string) => void
+}
+
+const CloudinaryUpload: React.FC<CloudinaryUploadProps> = (props) => {
   const { value, setValue } = props
   const [uploading, setUploading] = useState(false)
   const [error, setError] = useState('')
@@ -24,7 +30,7 @@ const CloudinaryUpload = (props: any) => {
       } else {
         setError('Upload failed')
       }
-    } catch (err) {
+    } catch (_err) {
       setError('Upload failed')
     }
     setUploading(false)
@@ -36,7 +42,7 @@ const CloudinaryUpload = (props: any) => {
       {uploading && <div>Uploading...</div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {value && typeof value === 'string' && (
-        <img src={value} alt="Cloudinary" style={{ maxWidth: 200, marginTop: 10 }} />
+        <Image src={value} alt="Cloudinary" width={200} height={150} style={{ marginTop: 10 }} />
       )}
     </div>
   )
