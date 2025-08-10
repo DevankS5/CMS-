@@ -10,14 +10,14 @@ export default function UploadTestPage() {
             This page is used for testing upload functionality in the Payload CMS application.
           </p>
         </div>
-        
+
         <div className="mt-12 bg-white rounded-lg shadow-md p-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Upload Testing Area</h2>
           <p className="text-gray-600 leading-relaxed mb-6">
-            Use this page to test various upload features and file handling capabilities
-            of your CMS implementation.
+            Use this page to test various upload features and file handling capabilities of your CMS
+            implementation.
           </p>
-          
+
           <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
             <p className="text-gray-500">Upload testing components can be added here</p>
           </div>

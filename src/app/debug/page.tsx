@@ -10,22 +10,20 @@ export default function DebugPage() {
             This page is used for debugging and testing purposes.
           </p>
         </div>
-        
+
         <div className="mt-12 bg-white rounded-lg shadow-md p-8">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Debug Information</h2>
           <div className="space-y-4">
             <div className="bg-gray-100 rounded p-4">
               <h3 className="font-medium text-gray-800 mb-2">Environment</h3>
-              <p className="text-gray-600">
-                Environment: {process.env.NODE_ENV || 'development'}
-              </p>
+              <p className="text-gray-600">Environment: {process.env.NODE_ENV || 'development'}</p>
             </div>
-            
+
             <div className="bg-gray-100 rounded p-4">
               <h3 className="font-medium text-gray-800 mb-2">Build Information</h3>
               <p className="text-gray-600">
-                This debug page can be used to display system information,
-                test components, or troubleshoot issues.
+                This debug page can be used to display system information, test components, or
+                troubleshoot issues.
               </p>
             </div>
           </div>

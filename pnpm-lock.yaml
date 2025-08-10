@@ -38,6 +38,9 @@ importers:
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
+      date-fns:
+        specifier: 4.1.0
+        version: 4.1.0
       dotenv:
         specifier: 16.4.7
         version: 16.4.7
@@ -50,6 +53,9 @@ importers:
       payload:
         specifier: 3.48.0
         version: 3.48.0(graphql@16.11.0)(typescript@5.7.3)
+      payload-storage-cloudinary:
+        specifier: ^1.1.3
+        version: 1.1.3(@payloadcms/ui@3.48.0(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.2(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.48.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3))(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.2(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.48.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)
       react:
         specifier: 19.1.0
         version: 19.1.0
@@ -3178,6 +3184,14 @@ packages:
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
+
+  payload-storage-cloudinary@1.1.3:
+    resolution: {integrity: sha512-Y2mX/9/kYPXdzZP27hQTQjzsrqXwtfNnLqbpFjE4lS9VqHB2TY/Q8AILap2VbxotRAzu1N/DW7+lel29QPGwEQ==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@payloadcms/ui': ^3.0.0
+      payload: ^3.0.0
+      react: ^19.0.0 || ^18.0.0
 
   payload@3.48.0:
     resolution: {integrity: sha512-4XG3fGI3Y7mYFz0hBShielwYsUCnI5ilmgBvRH6SZJ0sDUHsok3uTQn91QBRusRDjqk+Ml/dHpHWqSbZR/+GaQ==}
@@ -7907,6 +7921,21 @@ snapshots:
   path-to-regexp@6.3.0: {}
 
   path-type@4.0.0: {}
+
+  payload-storage-cloudinary@1.1.3(@payloadcms/ui@3.48.0(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.2(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.48.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3))(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.2(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.48.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3):
+    dependencies:
+      '@payloadcms/plugin-cloud-storage': 3.48.0(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.2(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.48.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)
+      '@payloadcms/ui': 3.48.0(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.2(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.48.0(graphql@16.11.0)(typescript@5.7.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)
+      cloudinary: 2.7.0
+      payload: 3.48.0(graphql@16.11.0)(typescript@5.7.3)
+      react: 19.1.0
+    transitivePeerDependencies:
+      - '@types/react'
+      - monaco-editor
+      - next
+      - react-dom
+      - supports-color
+      - typescript
 
   payload@3.48.0(graphql@16.11.0)(typescript@5.7.3):
     dependencies:

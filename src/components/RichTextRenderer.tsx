@@ -58,7 +58,9 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
       case 'paragraph':
         return (
           <p key={index} className="mb-4 leading-relaxed">
-            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) =>
+              renderNode(child, childIndex),
+            )}
           </p>
         )
 
@@ -78,7 +80,9 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
         return React.createElement(
           HeadingTag,
           { key: index, className: headingClass },
-          node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex)),
+          node.children?.map((child: RichTextNode, childIndex: number) =>
+            renderNode(child, childIndex),
+          ),
         )
 
       case 'list':
@@ -90,14 +94,18 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
 
         return (
           <ListTag key={index} className={listClass}>
-            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) =>
+              renderNode(child, childIndex),
+            )}
           </ListTag>
         )
 
       case 'listitem':
         return (
           <li key={index} className="mb-1">
-            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) =>
+              renderNode(child, childIndex),
+            )}
           </li>
         )
 
@@ -107,7 +115,9 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
             key={index}
             className="border-l-4 border-blue-500 pl-4 my-6 italic text-gray-700"
           >
-            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) =>
+              renderNode(child, childIndex),
+            )}
           </blockquote>
         )
 
@@ -120,7 +130,9 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
             target={node.newTab ? '_blank' : undefined}
             rel={node.newTab ? 'noopener noreferrer' : undefined}
           >
-            {node.children?.map((child: RichTextNode, childIndex: number) => renderNode(child, childIndex))}
+            {node.children?.map((child: RichTextNode, childIndex: number) =>
+              renderNode(child, childIndex),
+            )}
           </a>
         )
 
@@ -215,7 +227,9 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
                 </div>
               )}
               <pre className="p-4 overflow-x-auto">
-                <code className="font-mono text-sm">{typeof block.code === 'string' ? block.code : ''}</code>
+                <code className="font-mono text-sm">
+                  {typeof block.code === 'string' ? block.code : ''}
+                </code>
               </pre>
             </div>
           </div>
@@ -272,7 +286,9 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
     }
   }
 
-  const renderContent = (content: RichTextNode[] | RichTextContent | RichTextNode | string): React.ReactNode => {
+  const renderContent = (
+    content: RichTextNode[] | RichTextContent | RichTextNode | string,
+  ): React.ReactNode => {
     if (!content) {
       console.warn('RichTextRenderer: No content provided')
       return null
@@ -283,8 +299,15 @@ export const RichTextRenderer: React.FC<RichTextRendererProps> = ({ content, cla
         return content.map((item, index) => renderNode(item, index))
       }
 
-      if (typeof content === 'object' && 'root' in content && content.root && content.root.children) {
-        return content.root.children.map((child: RichTextNode, index: number) => renderNode(child, index))
+      if (
+        typeof content === 'object' &&
+        'root' in content &&
+        content.root &&
+        content.root.children
+      ) {
+        return content.root.children.map((child: RichTextNode, index: number) =>
+          renderNode(child, index),
+        )
       }
 
       if (typeof content === 'string' || (typeof content === 'object' && !('root' in content))) {
